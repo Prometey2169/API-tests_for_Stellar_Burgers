@@ -39,7 +39,7 @@ public class GetOrdersTest {
         userClient.loginUser(user);
         orderClient.createOrder(order, bearerToken);
 
-        ValidatableResponse responseOrderUser = orderClient.getClientOrder(bearerToken);
+        ValidatableResponse responseOrderUser = OrderClient.getClientOrder(bearerToken);
 
         responseOrderUser.assertThat().statusCode(200).body("success", is(true));
     }
@@ -49,7 +49,7 @@ public class GetOrdersTest {
     @Description("Проверка получения списка заказов неавторизованного пользователя")
     public void createOrderWithoutAuthorizationTest() {
         bearerToken = "";
-        ValidatableResponse getClientOrder = orderClient.getClientOrder(bearerToken);
+        ValidatableResponse getClientOrder = OrderClient.getClientOrder(bearerToken);
 
         getClientOrder.assertThat().statusCode(401).body("success", is(false)).and()
                 .body("message", is("You should be authorised"));
